@@ -1,27 +1,101 @@
-# OmersStoreFinal
+# Online Store Angular & Express API
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.4.
+This repository contains an Angular front‑end and an Express/Node.js back‑end for an online store application. It uses MongoDB (Atlas or local) to store data, with file uploads handled via GridFS.
 
-## Development server
+## Prerequisites
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* **Node.js** v14+ and **npm**
+* **Angular CLI** (`npm install -g @angular/cli`)
+* A **MongoDB** database (Atlas cluster or local)
 
-## Code scaffolding
+## Project Structure
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+/ (root)
+├── server/            # Express API server
+│   ├── .env.example   # Example environment variables
+│   ├── server.js      # Main server file
+│   └── …              # Models, helpers, routes
+└── client/            # Angular application
+    ├── src/
+    └── …
+```
 
-## Build
+## 1. Configure Environment Variables
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Copy `server/.env.example` to `server/.env`:
 
-## Running unit tests
+   ```bash
+   cp server/.env.example server/.env
+   ```
+2. Edit `server/.env` and set your MongoDB connection and secrets:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   ```ini
+   # MongoDB connection string (Atlas or local)
+   MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
 
-## Running end-to-end tests
+   # JSON Web Token secret
+   JWT_SECRET=your_jwt_secret
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   # reCAPTCHA secret key
+   RECAPTCHA_SECRET_KEY=your_recaptcha_key
+   ```
+3. Create `/client/src/environments/environment.ts` (or adjust existing) with your API URL:
 
-## Further help
+   ```ts
+   export const environment = {
+     production: false,
+     apiUrl: 'http://localhost:3000'
+   };
+   ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## 2. Setup MongoDB Atlas (Optional)
+
+1. Sign in to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. Create a new **Free Tier** cluster.
+3. Whitelist your IP address under **Network Access**.
+4. Create a database user and password under **Database Access**.
+5. Copy the provided connection string and paste it into `MONGO_URI`.
+
+## 3. Install Dependencies
+
+```bash
+# In the server folder
+git clone <repo-url>
+cd server
+npm install
+
+# In the client folder
+cd ../client
+npm install
+```
+
+## 4. Run Locally
+
+```bash
+# Start the API server (port 3000 by default)
+cd server
+npm start
+
+# Start the Angular app (port 4200 by default)
+cd ../client
+ng serve
+```
+
+Navigate to [http://localhost:4200](http://localhost:4200) in your browser.
+
+## 5. Deploying to Production
+
+* **Server**: build a Docker container or deploy to Heroku, AWS, etc. Ensure environment variables are set.
+* **Client**: run `ng build --prod` and serve static files via NGINX or any static host.
+
+## Contributing
+
+1. Fork this repository.
+2. Create a feature branch (`git checkout -b feature/xyz`).
+3. Commit your changes and push to your fork.
+4. Open a Pull Request.
+
+## License
+
+This project is licensed under the MIT License. See `LICENSE` for details.
