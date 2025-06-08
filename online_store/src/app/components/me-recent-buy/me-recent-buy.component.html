@@ -1,0 +1,16 @@
+<div
+  class="recent-buy-item animate-hoverScale"
+  [routerLink]="['/item-description']"
+  [state]="{ item: item.item }"
+>
+  <h1 class="num-of-items">{{ item.num_of_appearances }}</h1>
+
+  <img
+    *ngIf="item.item.imageFileId"
+    [src]="'http://localhost:3000/items/image/' + item.item.imageFileId"
+    alt="{{ item.item.item_name }}"
+  />
+
+  <h2>{{ item.item.item_name }}</h2>
+  <p>{{ item.price }}$</p>
+</div>

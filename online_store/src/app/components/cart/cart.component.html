@@ -1,0 +1,42 @@
+<div class="cart-container animate-fadeInUp">
+  <h1 class="cart-title">Your Cart</h1>
+
+  <div class="no-items-container animate-fadeInUp" *ngIf="no_items">
+    <!-- display a message when the cart is empty -->
+    <h1 class="no-items">{{ no_items }}</h1>
+  </div>
+
+  <div class="cart-items-grid" *ngIf="!no_items">
+    <!-- the list of cart items -->
+    <app-cart-unit
+      class="cart-item"
+      *ngFor="let item of items"
+      [item]="item"
+      (itemRemoved)="get_cart_items()"
+    >
+    </app-cart-unit>
+  </div>
+
+  <div class="final-price-container animate-fadeInUp" *ngIf="!no_items">
+    <!-- the total price of items in the cart -->
+    <h1 class="final-price-heading">Final Price</h1>
+    <p class="final-price-value">${{ totalSum }}</p>
+  </div>
+
+  <div class="cart-buttons" *ngIf="!no_items">
+    <!-- buttons -->
+    <button class="buy animate-hoverScale" (click)="buy()">Purchase</button>
+    <button class="remove animate-hoverScale" (click)="removeFromCart()">
+      Remove All
+    </button>
+  </div>
+
+  <div
+    *ngIf="showPopup"
+    @popupAnimation
+    class="popup purchase-popup animate-scaleIn"
+  >
+    <!-- Popup when successful -->
+    <p>Purchase successful!</p>
+  </div>
+</div>

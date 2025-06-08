@@ -1,0 +1,124 @@
+<div class="add-item-page animate-fadeInUp">
+  <!-- display header for adding a new item or editing an existing one -->
+  <h1 *ngIf="!isEdit" class="page-header animate-hoverScale">Add New Item</h1>
+  <h1 *ngIf="isEdit" class="page-header animate-hoverScale">Edit Item</h1>
+
+  <div class="form-group animate-fadeInUp">
+    <!-- image upload section -->
+    <label class="group-label">Upload Item Image</label>
+    <label for="image" class="custom-file-label animate-hoverScale">
+      Choose a photo
+    </label>
+    <input
+      type="file"
+      id="image"
+      class="input-file"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+
+  <div class="form-group animate-fadeInUp">
+    <!-- item name input field -->
+    <label class="group-label">Enter Item Name</label>
+    <textarea
+      class="textarea-item"
+      [(ngModel)]="item_name"
+      name="name"
+      id="name"
+    ></textarea>
+  </div>
+
+  <div class="form-group animate-fadeInUp">
+    <!-- price input field -->
+    <label class="group-label">Enter Item Price</label>
+    <textarea
+      class="textarea-item"
+      [(ngModel)]="price"
+      name="price"
+      id="price"
+    ></textarea>
+  </div>
+
+  <div class="form-group animate-fadeInUp">
+    <!-- description input field -->
+    <label class="group-label">Enter Item Description</label>
+    <textarea
+      class="textarea-item"
+      [(ngModel)]="description"
+      name="description"
+      id="description"
+    ></textarea>
+  </div>
+
+  <div class="form-group animate-fadeInUp">
+    <!-- dropdown for selecting item type -->
+    <label class="group-label">Select Item Type</label>
+    <select class="dropdown animate-hoverScale" [(ngModel)]="selectedItemType">
+      <option *ngFor="let type of itemTypes" [value]="type">
+        {{ type }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group-hashtags animate-fadeInUp">
+    <!-- hashtag input and display -->
+    <label class="group-label">Add #</label>
+
+    <textarea
+      class="textarea-hashtag"
+      [(ngModel)]="hashtag"
+      name="hashtag"
+      id="hashtag"
+    ></textarea>
+
+    <button class="add-hashtag-btn animate-hoverScale" (click)="addHashtag()">
+      Add #
+    </button>
+
+    <div class="hashtag-container">
+      <div class="hashtag-block" *ngFor="let tag of hashtags; let i = index">
+        <span>{{ tag }}</span>
+        <button class="remove-btn" (click)="removeHashtag(i)">x</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group-related animate-fadeInUp">
+    <!-- recommended tags section -->
+    <label class="group-label">Recommended Tags</label>
+    <div class="recommended-tags">
+      <span
+        class="recommended-tag"
+        *ngFor="let tag of recommendedTags"
+        (click)="addRecommendedTag(tag)"
+      >
+        {{ tag }}
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group animate-fadeInUp" *ngIf="!isEdit">
+    <!-- submit button for adding a new item -->
+    <button
+      class="submit-btn animate-hoverScale"
+      [disabled]="processing"
+      (click)="add_item()"
+    >
+      Submit
+    </button>
+  </div>
+
+  <div class="form-group animate-fadeInUp" *ngIf="isEdit">
+    <!-- submit button for editing an item -->
+    <button
+      class="submit-btn animate-hoverScale"
+      [disabled]="processing"
+      (click)="edit_item()"
+    >
+      Submit
+    </button>
+  </div>
+  <h1 class="error-message animate-fadeInUp">
+    {{ error }}
+  </h1>
+</div>

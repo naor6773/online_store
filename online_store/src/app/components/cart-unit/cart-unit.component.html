@@ -1,0 +1,26 @@
+<div
+  class="cart-unit animate-hoverScale"
+  [routerLink]="['/item-description']"
+  [state]="{ item: item.item }"
+  style="cursor: pointer"
+>
+  <!-- remove button -->
+  <button
+    (click)="remove_from_cart(item); $event.stopPropagation()"
+    class="close-icon fas fa-times"
+  ></button>
+
+  <!-- number of item appearances in cart -->
+  <h1 class="num-of-items">{{ item.num_of_appearances }}</h1>
+
+  <!-- rendered image for the item -->
+  <img
+    *ngIf="item.item.imageFileId"
+    [src]="'http://localhost:3000/items/image/' + item.item.imageFileId"
+    alt="{{ item.item.item_name }}"
+  />
+
+  <!-- item ditailes -->
+  <h2 class="cart-item-title">{{ item.item.item_name }}</h2>
+  <p class="cart-item-price">{{ item.price }} dollars</p>
+</div>

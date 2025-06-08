@@ -1,0 +1,165 @@
+<div class="my-container">
+  <div *ngIf="error" class="my-alert my-alert-error">
+    {{ error }}
+  </div>
+
+  <!-- title -->
+  <div class="my-card">
+    <div class="my-card-header">
+      <h2 class="my-card-title">Price Drop Recommendations</h2>
+    </div>
+
+    <!-- table -->
+    <div class="my-card-body" *ngIf="priceDropRecommendations.length > 0">
+      <table class="my-table">
+        <thead class="my-thead">
+          <tr>
+            <th>Item Name</th>
+            <th>Current Price</th>
+            <th>Recommended Price</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rec of priceDropRecommendations">
+            <td>{{ rec.itemName }}</td>
+            <td>{{ rec.currentPrice | currency }}</td>
+            <td>{{ rec.recommendedPrice | currency }}</td>
+            <td>{{ rec.category }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- eror -->
+    <div
+      class="my-card-body"
+      *ngIf="!error && priceDropRecommendations.length === 0"
+    >
+      <p class="my-faded-text">No price drop recommendations at this time.</p>
+    </div>
+  </div>
+
+  <!-- title -->
+  <div class="my-card">
+    <div class="my-card-header">
+      <h2 class="my-card-title">Switch Tag Recommendations</h2>
+    </div>
+
+    <!-- table -->
+    <div class="my-card-body" *ngIf="switchTagRecommendations.length > 0">
+      <table class="my-table">
+        <thead class="my-thead">
+          <tr>
+            <th>Item Name</th>
+            <th>Current Price</th>
+            <th>Category</th>
+            <th class="my-actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rec of switchTagRecommendations">
+            <td>{{ rec.itemName }}</td>
+            <td>{{ rec.currentPrice | currency }}</td>
+            <td>{{ rec.category }}</td>
+            <td class="my-actions-col">
+              <button
+                class="my-btn my-btn-outline my-btn-small"
+                (click)="toggleHashtags(rec)"
+              >
+                {{ expandedRows[rec.itemId] ? 'Hide' : 'Manage Hashtags' }}
+              </button>
+            </td>
+          </tr>
+
+          <!-- tag recomnditon section -->
+          <tr
+            *ngFor="let rec of switchTagRecommendations"
+            [ngClass]="{ 'my-hidden': !expandedRows[rec.itemId] }"
+          >
+            <td colspan="4" class="my-expanded-cell">
+              <div *ngIf="expandedRows[rec.itemId]" class="my-hashtag-manager">
+                <h3 class="my-subtitle">
+                  Manage Hashtags for {{ rec.itemName }}
+                </h3>
+
+                <div class="my-section">
+                  <label class="my-label">Current Hashtags:</label>
+                  <div *ngIf="itemHashtags[rec.itemId]; else noHashtags">
+                    <span
+                      class="my-badge"
+                      *ngFor="
+                        let tag of itemHashtags[rec.itemId];
+                        let i = index
+                      "
+                    >
+                      {{ tag }}
+                      <button
+                        type="button"
+                        class="my-close-btn"
+                        (click)="removeHashtag(rec.itemId, i)"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  </div>
+                  <ng-template #noHashtags>
+                    <div class="my-faded-text">No hashtags yet.</div>
+                  </ng-template>
+                </div>
+
+                <div class="my-section">
+                  <label class="my-label">Popular Tags:</label>
+                  <div *ngIf="recommendedTags[rec.itemId]; else noPopularTags">
+                    <button
+                      class="my-btn my-btn-hashtag"
+                      *ngFor="let tag of recommendedTags[rec.itemId]"
+                      (click)="addRecommendedTag(rec.itemId, tag)"
+                    >
+                      #{{ tag }}
+                    </button>
+                  </div>
+                  <ng-template #noPopularTags>
+                    <div class="my-faded-text">No recommended tags found.</div>
+                  </ng-template>
+                </div>
+
+                <div class="my-section">
+                  <label class="my-label">Add Custom Tag:</label>
+                  <div class="my-input-group">
+                    <input
+                      type="text"
+                      class="my-input"
+                      [(ngModel)]="customHashtagInput[rec.itemId]"
+                      placeholder="#myCustomTag"
+                    />
+                    <button
+                      class="my-btn my-btn-success"
+                      (click)="addCustomHashtag(rec.itemId)"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  class="my-btn my-btn-primary"
+                  (click)="saveHashtags(rec)"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="my-card-body"
+      *ngIf="!error && switchTagRecommendations.length === 0"
+    >
+      <p class="my-faded-text">No switch tag recommendations at this time.</p>
+    </div>
+  </div>
+</div>

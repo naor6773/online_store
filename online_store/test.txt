@@ -1,0 +1,10 @@
+
+  //if the user worte something in search
+  didModify() {
+    //filter the item base on what the user worte in the searth bar
+    this.filteredItems = this.items.filter(item =>
+      item.item_name.toLowerCase().includes(this.textValue.toLowerCase()) ||
+      item.description.toLowerCase().includes(this.textValue.toLowerCase()) ||
+      item.hashtags.some(hashtag => hashtag.toLowerCase().includes(this.textValue.toLowerCase()))
+    );
+  }

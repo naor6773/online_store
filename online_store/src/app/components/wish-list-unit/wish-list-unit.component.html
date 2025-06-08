@@ -1,0 +1,54 @@
+<div
+  class="wish-list-unit animate-hoverScale"
+  [routerLink]="['/item-description']"
+  [state]="{ item: item }"
+  (click)="$event.stopPropagation()"
+  style="cursor: pointer"
+>
+  <!-- remove button -->
+  <button
+    (click)="remove_from_wish_list(item); $event.stopPropagation()"
+    class="close-icon fas fa-times"
+  ></button>
+
+  <!-- item details -->
+  <div
+    class="bogo-badge"
+    *ngIf="isDiscountActive() && item.discount?.type === 'BOGO'"
+  >
+    BOGO
+  </div>
+
+  <img
+    *ngIf="item.imageFileId"
+    [src]="'http://localhost:3000/items/image/' + item.imageFileId"
+    alt="{{ item.item_name }}"
+  />
+
+  <h2 class="wish-list-item-title">{{ item.item_name }}</h2>
+
+  <ng-container
+    *ngIf="
+      isDiscountActive() && item.discount?.type === 'discount';
+      else noDiscount
+    "
+  >
+    <p class="price discounted-price animate-fadeInDelayed">
+      <span class="old-price">{{ item.price }}$</span>
+      <span class="new-price">{{ item.discount?.newPrice }}$</span>
+      <span class="discount-time-left"> </span>
+    </p>
+  </ng-container>
+  <ng-template #noDiscount>
+    <p class="price animate-fadeInDelayed">{{ item.price }}$</p>
+
+    <!-- add to cart button -->
+
+    <button
+      (click)="addThisToCart(item); $event.stopPropagation()"
+      class="add-to-cart animate-hoverScale"
+    >
+      Add to Cart
+    </button>
+  </ng-template>
+</div>

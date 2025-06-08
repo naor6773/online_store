@@ -1,0 +1,40 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<div *ngIf="currentRoute !== '/'" class="nav-bar">
+  <button [routerLink]="['/home']" class="store-title-btn">OMER'S STORE</button>
+  <div class="icons">
+    <button [routerLink]="['/home']" class="icon fas fa-home"></button>
+
+    <div *ngIf="cart_show" class="cart-container">
+      <h1 class="num-of-items" *ngIf="cart_length > 0">{{ cart_length }}</h1>
+      <button
+        [routerLink]="['/cart']"
+        class="icon-cart fas fa-shopping-cart"
+      ></button>
+    </div>
+
+    <div class="discount-container" *ngIf="cart_show">
+      <h1 class="num-of-items" *ngIf="discount_count > 0">
+        {{ discount_count }}
+      </h1>
+      <button
+        [routerLink]="['/wishlist']"
+        class="icon-cart fas fa-heart"
+      ></button>
+    </div>
+
+    <button [routerLink]="['/me']" class="icon fas fa-user"></button>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

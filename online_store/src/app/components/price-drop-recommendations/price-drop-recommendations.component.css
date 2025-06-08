@@ -1,0 +1,207 @@
+.my-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+}
+
+.my-alert {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.my-alert-error {
+  background-color: #ffefef;
+  color: #c10000;
+  border: 1px solid #ffb3b3;
+}
+
+.my-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.my-card-header {
+  background-color: #0077cc;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.my-card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.my-card-body {
+  padding: 1.5rem;
+}
+
+.my-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-thead th {
+  background-color: #f3f5f7;
+  text-align: left;
+  font-weight: 600;
+}
+
+.my-table th,
+.my-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.my-table tr:hover td {
+  background-color: #f9f9f9;
+}
+
+.my-actions-col {
+  text-align: center;
+  width: 160px;
+}
+
+.my-hidden {
+  display: none;
+}
+
+.my-expanded-cell {
+  background-color: #fafafa;
+  padding: 0.5rem 1rem !important;
+}
+
+.my-hashtag-manager {
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.my-subtitle {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.my-section {
+  margin-bottom: 1.5rem;
+}
+
+.my-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.my-faded-text {
+  color: #999;
+  font-style: italic;
+}
+
+.my-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #8898aa;
+  color: #fff;
+  padding: 0.3rem 0.75rem;
+  margin: 0 0.5rem 0.5rem 0;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+
+.my-close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.my-close-btn:hover {
+  opacity: 0.8;
+}
+
+.my-btn {
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.my-btn-primary {
+  background-color: #0077cc;
+  color: #fff;
+}
+
+.my-btn-primary:hover {
+  background-color: #005fa3;
+}
+
+.my-btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.my-btn-success:hover {
+  background-color: #218838;
+}
+
+.my-btn-outline {
+  background-color: #fff;
+  border: 1px solid #0077cc;
+  color: #0077cc;
+}
+
+.my-btn-outline:hover {
+  background-color: #0077cc;
+  color: #fff;
+}
+
+.my-btn-hashtag {
+  background-color: #0077cc;
+  color: #fff;
+  margin: 0 0.5rem 0.5rem 0;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+}
+
+.my-btn-hashtag:hover {
+  background-color: #005fa3;
+}
+
+.my-btn-small {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.my-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.my-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.my-input:focus {
+  outline: none;
+  border-color: #0077cc;
+}

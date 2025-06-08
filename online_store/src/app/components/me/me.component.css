@@ -1,0 +1,96 @@
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease forwards;
+}
+.animate-hoverScale {
+  transition: transform var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
+}
+.animate-hoverScale:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.me-page-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fdfdfd;
+  padding: 2rem;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-name {
+  font-size: 4rem;
+  text-align: center;
+  margin: 1rem 0 2rem 0;
+  color: var(--text-dark);
+  transition: transform var(--transition-speed);
+}
+
+.recent-purchases {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  transition: transform var(--transition-speed);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto 3rem auto;
+}
+
+.stats-continor {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.log-out {
+  padding: 15px 30px;
+  background: red;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform var(--transition-speed),
+    box-shadow var(--transition-speed);
+  margin-top: 2rem;
+}
+.log-out:hover {
+  background: orangered;
+  transform: scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+.log-out:active {
+  transform: scale(0.95);
+}

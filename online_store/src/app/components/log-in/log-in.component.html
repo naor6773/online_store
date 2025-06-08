@@ -1,0 +1,84 @@
+<!-- chnage background if admin -->
+<div
+  class="login-page animate-fadeInUp"
+  [ngClass]="{ 'admin-mode': is_admin === true }"
+  (keydown.enter)="submit()"
+>
+  <!-- titels -->
+
+  <h1 class="main-header animate-fadeInUp">Omer's Store</h1>
+
+  <h1 class="sub-header animate-fadeInUp">
+    {{ witch_state }}
+  </h1>
+
+  <h1 class="sub-header animate-fadeInUp" *ngIf="is_admin">
+    {{ witch_state_admin }}
+  </h1>
+
+  <!-- text inputs -->
+  <div class="form-group animate-fadeInUp">
+    <label class="group-label">User Name</label>
+    <input
+      class="input-field"
+      name="user_name"
+      id="user_name"
+      placeholder="Enter user name"
+      [(ngModel)]="username"
+    />
+  </div>
+
+  <div class="form-group animate-fadeInUp">
+    <label class="group-label">Password</label>
+    <input
+      class="input-field"
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Enter password"
+      [(ngModel)]="password"
+      (focus)="showPasswordHint = true"
+    />
+
+    <div
+      class="password-hint"
+      *ngIf="showPasswordHint && witch_state === 'register'"
+    >
+      <p>• At least 8 characters</p>
+      <p>• At least 1 uppercase letter</p>
+      <p>• At least 1 lowercase letter</p>
+      <p>• At least 1 number</p>
+      <p>• At least 1 special character (!#$%^&*...)</p>
+    </div>
+  </div>
+
+  <!-- buttons -->
+  <div class="form-group animate-fadeInUp">
+    <button class="submit-btn animate-hoverScale" (click)="submit()">
+      Submit
+    </button>
+  </div>
+
+  <div class="form-group animate-fadeInUp">
+    <button
+      class="switch-btn animate-hoverScale"
+      *ngIf="!is_admin"
+      (click)="login_or_regester()"
+    >
+      {{ chnage_button }}
+    </button>
+  </div>
+
+  <div class="form-group animate-fadeInUp">
+    <button
+      class="admin-toggle-btn animate-hoverScale"
+      (click)="admin_or_user()"
+    >
+      {{ admin_button }}
+    </button>
+  </div>
+
+  <h1 class="error-message animate-fadeInUp">
+    {{ error }}
+  </h1>
+</div>

@@ -1,0 +1,25 @@
+:root {
+  --primary-bg: #37474f;
+  --badge: #ff6f61;
+  --primary-text: #ffffff;
+  --accent: #007bff;
+  --success: #4caf50;
+  --warning: #ffaa00;
+  --danger: #ff4444;
+  --white: #ffffff;
+  --text-dark: #333;
+  --hover-scale: 1.05;
+  --transition-speed: 0.3s;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

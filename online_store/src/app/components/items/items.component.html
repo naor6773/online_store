@@ -1,0 +1,186 @@
+<div class="container">
+  <div class="main-content">
+    <div class="title-container animate-fadeInUp">
+      <!-- back to catagroy select button -->
+      <button
+        *ngIf="!showCategoryBlocks"
+        class="back-button animate-hoverScale"
+        (click)="showAllCategories()"
+        aria-label="Back"
+      >
+        <i class="fas fa-arrow-left"></i>
+      </button>
+
+      <!-- dynamic title -->
+      <h1 *ngIf="isFromBogoSelection" class="page-title">
+        Please select a BOGO item!
+      </h1>
+      <h1
+        *ngIf="!isFromBogoSelection && !isShowingAdminsItems"
+        class="page-title"
+      >
+        Home
+      </h1>
+      <h1 *ngIf="isShowingAdminsItems" class="page-title">
+        {{ admin_name }}'s items
+      </h1>
+    </div>
+
+    <!-- seartch bar -->
+    <div class="search-container animate-fadeInUp">
+      <input
+        type="text"
+        class="search"
+        name="search"
+        id="search"
+        placeholder="Search items..."
+        [(ngModel)]="textValue"
+        (ngModelChange)="didModify()"
+        (keydown.enter)="onEnter()"
+        autocomplete="off"
+        aria-autocomplete="list"
+        aria-controls="autocomplete-list"
+        role="combobox"
+        #searchInput
+      />
+
+      <ul
+        *ngIf="suggestions.length > 0"
+        class="autocomplete-suggestions"
+        role="listbox"
+        id="autocomplete-list"
+      >
+        <li
+          *ngFor="let suggestion of suggestions; let i = index"
+          (click)="selectSuggestion(suggestion)"
+          class="suggestion-item"
+          role="option"
+          tabindex="0"
+        >
+          <i class="fas fa-search suggestion-icon"></i>
+          <span class="suggestion-text">{{ suggestion }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- category-blocks -->
+    <div *ngIf="showCategoryBlocks" class="category-blocks animate-fadeInUp">
+      <div
+        class="category-block animate-hoverScale"
+        *ngFor="let type of itemTypes"
+        (click)="onCategoryClick(type)"
+      >
+        <div class="image-wrapper">
+          <img
+            [src]="getMostSellingItemImage(type)"
+            alt="{{ type }}"
+            class="category-image"
+          />
+        </div>
+        <p class="category-title">{{ type }}</p>
+      </div>
+    </div>
+
+    <!-- items -->
+    <div
+      *ngIf="!showCategoryBlocks"
+      class="grid-container animate-fadeInUp"
+      infiniteScroll
+      [infiniteScrollDistance]="1"
+      [infiniteScrollThrottle]="300"
+      (scrolled)="onScroll()"
+      [scrollWindow]="true"
+    >
+      <div
+        class="item animate-hoverScale"
+        *ngFor="let item of filteredItems"
+        [ngClass]="getPromotionClass(item.promotion_level)"
+        [routerLink]="isEditMode ? null : ['/item-description']"
+        [queryParams]="isFromBogoSelection ? { id: item._id } : null"
+        [state]="isFromBogoSelection ? { item: receivedItem } : { item: item }"
+      >
+        <app-item-unit
+          [item]="item"
+          [isFromBogoSelection]="isFromBogoSelection"
+          [isEditMode]="isEditMode"
+          (delete)="onItemDeleted($event)"
+        ></app-item-unit>
+
+        <span *ngIf="item.promotion_level !== 'regular'" class="promoted-label">
+          Promoted
+        </span>
+      </div>
+    </div>
+
+    <div class="loading-indicator" *ngIf="isLoading">
+      <p>Loading more items...</p>
+    </div>
+
+    <!-- admin buttons -->
+    <div class="button_container">
+      <button
+        *ngIf="role == 'admin'"
+        class="edit_item_button animate-hoverScale"
+        (click)="toggleEditMode()"
+      >
+        <i class="fas" [ngClass]="isEditMode ? 'fa-times' : 'fa-pen'"></i>
+      </button>
+
+      <button
+        *ngIf="role == 'admin'"
+        class="add_item_button animate-hoverScale"
+        [routerLink]="['/add-item']"
+      >
+        +
+      </button>
+    </div>
+  </div>
+
+  <!-- filters -->
+  <div *ngIf="!showCategoryBlocks" class="filters-section">
+    <div class="filter animate-fadeInUp">
+      <label for="typeFilter">Filter by Type:</label>
+      <select
+        id="typeFilter"
+        [(ngModel)]="selectedType"
+        (change)="filterByType()"
+      >
+        <option value="All">All</option>
+        <option *ngFor="let type of itemTypes" [value]="type">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+    <div class="filter animate-fadeInUp">
+      <label for="sortOption">Sort by:</label>
+      <select
+        id="sortOption"
+        [(ngModel)]="sortOption"
+        (change)="filterByType()"
+      >
+        <option value="Recommended">Recommended</option>
+        <option value="Price Ascending">Price Ascending</option>
+        <option value="Price Descending">Price Descending</option>
+      </select>
+    </div>
+    <div class="filter animate-fadeInUp">
+      <label>Filter by Price:</label>
+      <div
+        class="price-range"
+        *ngIf="priceRange.min !== undefined && priceRange.max !== undefined"
+      >
+        <ngx-slider
+          [(value)]="minPrice"
+          [(highValue)]="maxPrice"
+          [options]="sliderOptions"
+          (userChangeEnd)="filterByType()"
+        ></ngx-slider>
+
+        <div class="price-values">
+          <span>Min: {{ minPrice | currency }}</span>
+          <span>Max: {{ maxPrice | currency }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

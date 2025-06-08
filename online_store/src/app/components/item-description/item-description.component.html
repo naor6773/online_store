@@ -1,0 +1,374 @@
+<div class="description-container animate-fadeInUp">
+  <div class="item-detail-continor">
+    <!-- show item image -->
+    <img
+      *ngIf="item.imageFileId"
+      class="item-detail-image animate-hoverScale"
+      [src]="'http://localhost:3000/items/image/' + item.imageFileId"
+      alt="{{ item.item_name }}"
+    />
+
+    <!-- item name -->
+    <h1 class="item-detail-title animate-fadeInDelayed">
+      {{ item.item_name }}
+    </h1>
+
+    <!-- button to navigate to store owner(admin) products -->
+    <button
+      [routerLink]="['/home']"
+      [queryParams]="{ admin_name: item.admin_name }"
+      (click)="admin_prodacts($event)"
+      class="admin-name animate-hoverScale"
+    >
+      {{ item.admin_name }}
+    </button>
+
+    <!-- show discount info -->
+    <ng-container
+      *ngIf="
+        isDiscountActive(item) && item.discount?.type === 'discount';
+        else noDiscount
+      "
+    >
+      <p class="price discounted-price animate-fadeInDelayed">
+        <span class="old-price">{{ item.price }}$</span>
+        <span class="new-price">{{ item.discount?.newPrice }}$</span>
+        <span class="discount-time-left">
+          Discount ends in: {{ discountTimeLeft }}
+        </span>
+      </p>
+    </ng-container>
+
+    <ng-template #noDiscount>
+      <p class="price animate-fadeInDelayed">{{ item.price }}$</p>
+    </ng-template>
+
+    <!-- show average rating -->
+    <div class="average-rating" *ngIf="getTotalRatings() > 0">
+      <p>Average Rating: {{ getAverageRating() | number : '1.1-1' }} / 5</p>
+    </div>
+
+    <p class="description animate-fadeInUp">
+      {{ item.description }}
+    </p>
+
+    <!-- BOGO deal section -->
+    <div
+      *ngIf="bogoItem.admin_name !== '' && isDiscountActive(item)"
+      class="bogo-deal-item animate-slideIn"
+    >
+      <label class="bogo-checkbox-label">
+        <input
+          type="checkbox"
+          class="bogo-checkbox"
+          [(ngModel)]="getBogoDeal"
+        />
+        I want this BOGO deal!
+      </label>
+
+      <div
+        class="bogo-item-content"
+        [routerLink]="['/item-description']"
+        [state]="{ item: bogoItem }"
+      >
+        <img
+          class="bogo-image"
+          [src]="'http://localhost:3000/items/image/' + bogoItem.imageFileId"
+          alt="{{ bogoItem.item_name }}"
+        />
+        <h3 class="bogo-item-title">
+          {{ bogoItem.item_name }}
+        </h3>
+        <p class="bogo-normal-price">
+          Normal Price: <span>{{ bogoItem.price }}$</span>
+        </p>
+        <p class="bogo-deal-price">
+          Deal Price: <span>{{ item.discount?.newPrice }}$</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- statistics section -->
+  <div *ngIf="!show_user_fields" class="stats-container animate-fadeInUp">
+    <div class="years">
+      <h3>Select Year</h3>
+      <div class="year-buttons">
+        <button
+          *ngFor="let year of years"
+          (click)="onYearSelected(year)"
+          [ngClass]="{ selected: selectedYear === year }"
+        >
+          {{ year }}
+        </button>
+      </div>
+    </div>
+
+    <div class="months" *ngIf="selectedYear">
+      <h3>Select Month</h3>
+      <div class="month-buttons">
+        <button
+          *ngFor="let month of months"
+          (click)="onMonthSelected(month)"
+          [ngClass]="{ selected: selectedMonth === month }"
+        >
+          {{ month }}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="salesInfo" class="sales-info">
+      <h3>Sales for {{ selectedMonth }} {{ selectedYear }}</h3>
+      <p>
+        Sales for the year:
+        <strong>
+          {{ salesInfo.salesByYear[selectedYear ?? 0] }}
+        </strong>
+      </p>
+      <p>
+        Sales for the month:
+        <strong>
+          {{ salesInfo.salesByMonth[selectedYear + '-' + selectedMonth] }}
+        </strong>
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="similarItems.length > 0" class="item-unit animate-fadeInUp">
+    <h3>Similar Products</h3>
+    <div class="similar-product" *ngFor="let simItem of similarItems">
+      <!-- Display "BOGO" badge if there is a BOGO discount -->
+      <div
+        class="bogo-badge"
+        *ngIf="isDiscountActive(simItem) && item.discount?.type === 'BOGO'"
+      >
+        BOGO
+      </div>
+
+      <!-- item details -->
+      <img
+        [src]="'http://localhost:3000/items/image/' + simItem.imageFileId"
+        alt="{{ simItem.item_name }}"
+      />
+
+      <h1>{{ simItem.item_name }}</h1>
+
+      <ng-container
+        *ngIf="
+          isDiscountActive(simItem) && simItem.discount?.type === 'discount';
+          else noDiscount
+        "
+      >
+        <p class="price discounted-price animate-fadeInDelayed">
+          <span class="old-price">{{ simItem.price }}$</span>
+          <span class="new-price">{{ simItem.discount?.newPrice }}$</span>
+        </p>
+      </ng-container>
+      <ng-template #noDiscount>
+        <p class="price animate-fadeInDelayed">{{ simItem.price }}$</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- star distribution chart -->
+  <div class="star-distribution animate-fadeInUp" *ngIf="getTotalRatings() > 0">
+    <h4>Star Ratings Distribution</h4>
+    <div
+      class="star-row"
+      *ngFor="let count of ratingDistribution.slice().reverse(); let i = index"
+      (click)="filterCommentsByStars(5 - i)"
+    >
+      <span
+        >{{ 5 - i }} Stars ({{ count }}) ({{
+          getDistributionPercentage(count).toFixed(0)
+        }}%)</span
+      >
+
+      <div class="bar-container">
+        <div
+          class="bar"
+          [style.width.%]="getDistributionPercentage(count)"
+        ></div>
+      </div>
+    </div>
+    <div class="star-dist-buttons">
+      <button (click)="showAllComments()">Show All Comments</button>
+      <button (click)="sortCommentsBestToWorst()">Best to Worst</button>
+      <button (click)="sortCommentsWorstToBest()">Worst to Best</button>
+    </div>
+  </div>
+
+  <!-- comments section -->
+  <div class="comments-section animate-fadeInUp">
+    <h3>Comments</h3>
+
+    <div
+      *ngFor="let comment of filteredComments"
+      class="comment"
+      [ngClass]="{ 'admin-comment': comment.isAdmin }"
+    >
+      <p class="username">
+        {{ comment.username }}
+        <span *ngIf="comment.isAdmin" class="admin-badge"> (Admin) </span>
+      </p>
+      <p class="content">{{ comment.content }}</p>
+      <p *ngIf="comment.starRating" class="stars-display">
+        Rating: {{ comment.starRating }}★
+      </p>
+    </div>
+
+    <div class="new-comment animate-fadeInUp">
+      <div *ngIf="show_user_fields" class="star-input">
+        <span
+          *ngFor="let star of [1, 2, 3, 4, 5]"
+          class="star"
+          [class.filled]="star <= (hoverRating || starRating)"
+          (click)="starRating = star"
+          (mouseenter)="hoverRating = star"
+          (mouseleave)="hoverRating = 0"
+        >
+          &#9733;
+        </span>
+      </div>
+
+      <textarea
+        [(ngModel)]="newComment"
+        placeholder="Write your comment here..."
+      ></textarea>
+      <button (click)="addComment()">Submit Comment</button>
+    </div>
+  </div>
+</div>
+
+<!-- bottom bar with purchase/remove buttons for users, and promotion/discount buttons for admins -->
+<div class="bottom-bar animate-slideUp">
+  <div class="left-section">
+    <button
+      *ngIf="role !== 'admin'"
+      class="heart-button animate-hoverScale"
+      [ngStyle]="{ color: isInWishList ? 'green' : 'gray' }"
+      (click)="toggleWishList($event)"
+    >
+      <i class="fas fa-heart"></i>
+    </button>
+
+    <h1 *ngIf="show_user_fields" class="num-of-purtches">
+      {{ num_of_purchases }}
+    </h1>
+  </div>
+
+  <div class="middle-section" *ngIf="show_user_fields">
+    <button
+      class="buy animate-hoverScale"
+      id="purchase_btn"
+      (click)="add_to_shopping_cart(quantity)"
+    >
+      purchase
+    </button>
+
+    <button
+      class="remove animate-hoverScale"
+      id="delete_btn"
+      (click)="delete_items(quantity)"
+    >
+      delete
+    </button>
+
+    <div class="quantity-selector">
+      <button (click)="decreaseQuantity()">-</button>
+      <span>{{ quantity }}</span>
+      <button (click)="increaseQuantity()">+</button>
+    </div>
+  </div>
+
+  <div class="middle-section" *ngIf="!show_user_fields">
+    <button
+      class="promote-button animate-hoverScale"
+      (click)="openPromotionPopup()"
+    >
+      Promote
+    </button>
+    <button
+      class="discount-button animate-hoverScale"
+      (click)="openDiscountPopup()"
+    >
+      Discount
+    </button>
+  </div>
+</div>
+
+<!-- promotion popup -->
+<div
+  *ngIf="showPromotionPopup"
+  class="popup promotion-popup animate-scaleIn"
+  @popupAnimation
+>
+  <button class="close-button" (click)="closePromotion()">×</button>
+  <h3 class="popup-title">Promote Product</h3>
+  <p>Select a promotion type:</p>
+  <div class="promotion-options">
+    <button (click)="setPromotion('super')">Super 15$</button>
+    <button (click)="setPromotion('excellent')">Excellent 10$</button>
+    <button (click)="setPromotion('good')">Good 5$</button>
+    <button (click)="cancelPromotion()">Cancel Promotion</button>
+  </div>
+</div>
+
+<!-- discount popup -->
+<div
+  *ngIf="showDiscountPopup"
+  class="popup discount-popup animate-scaleIn"
+  @popupAnimation
+>
+  <button class="close-button" (click)="closeDiscountPopup()">×</button>
+  <h3 class="popup-title">Set Discount</h3>
+
+  <label class="discount-label">
+    Discount Type:
+    <select [(ngModel)]="discountFormData.type">
+      <option value="discount">discount</option>
+      <option value="BOGO">Buy One Get One</option>
+    </select>
+  </label>
+
+  <label class="discount-label">
+    Discount Value:
+    <input type="number" min="0" [(ngModel)]="discountFormData.newPrice" />
+  </label>
+
+  <label class="discount-label" *ngIf="discountFormData.type === 'BOGO'">
+    Select BOGO:
+    <button
+      class="bogo-select-button"
+      [routerLink]="['/home']"
+      [queryParams]="{ source: 'bogo-selection' }"
+      [state]="{ item: item }"
+      (click)="bongoSelectButton($event)"
+    >
+      BOGO Selection
+    </button>
+  </label>
+
+  <label class="discount-label">
+    Start Date:
+    <input type="date" [(ngModel)]="discountFormData.startDate" />
+  </label>
+
+  <label class="discount-label">
+    End Date:
+    <input type="date" [(ngModel)]="discountFormData.endDate" />
+  </label>
+
+  <div class="discount-popup-buttons">
+    <button (click)="setDiscount()">Save Discount</button>
+  </div>
+</div>
+
+<!-- successful popup message -->
+<div
+  *ngIf="showPopup"
+  class="popup purchase-popup animate-scaleIn"
+  @popupAnimation
+>
+  <p>successful!</p>
+</div>

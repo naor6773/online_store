@@ -1,0 +1,150 @@
+.item-unit {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color-dark);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.item-unit img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.item-unit h1 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+.item-unit p {
+  font-size: 1rem;
+  margin: 0;
+  color: #555;
+  font-weight: 500;
+}
+
+.price {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  transition: transform var(--transition-speed) ease;
+  color: var(--text-dark);
+}
+.price:hover {
+  transform: scale(1.03);
+}
+
+.discounted-price {
+  position: relative;
+  font-size: 2rem;
+}
+.discounted-price .old-price {
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 15px;
+}
+.discounted-price .new-price {
+  color: #e60000;
+  font-weight: bold;
+}
+.discounted-price .discount-time-left {
+  display: block;
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.bogo-badge {
+  background-color: #ffd700;
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.shake {
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0.5px, 0.5px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-0.5px, -1px) rotate(-0.5deg);
+  }
+  20% {
+    transform: translate(-1.5px, 0px) rotate(0.5deg);
+  }
+  30% {
+    transform: translate(1.5px, 1px) rotate(0deg);
+  }
+  40% {
+    transform: translate(0.5px, -0.5px) rotate(0.5deg);
+  }
+  50% {
+    transform: translate(-0.5px, 1px) rotate(-0.5deg);
+  }
+  60% {
+    transform: translate(-1.5px, 0.5px) rotate(0deg);
+  }
+  70% {
+    transform: translate(1.5px, 0.5px) rotate(-0.5deg);
+  }
+  80% {
+    transform: translate(-0.5px, -0.5px) rotate(0.5deg);
+  }
+  90% {
+    transform: translate(0.5px, 1px) rotate(0deg);
+  }
+  100% {
+    transform: translate(0.5px, -1px) rotate(-0.5deg);
+  }
+}
+
+.edit-buttons {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.delete-button,
+.edit-button {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: rgba(255, 0, 0, 0.8);
+}
+
+.edit-button:hover {
+  background-color: rgba(0, 255, 0, 0.8);
+}
+
+.edit-buttons button {
+  padding: 0;
+}

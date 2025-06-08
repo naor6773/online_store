@@ -1,0 +1,35 @@
+<div class="me-stats-container animate-fadeInUp">
+  <div class="stats-boxes-container">
+    <div class="stats-box animate-hoverScale">
+      <h1 class="headline">This Month's Sales</h1>
+      <div class="circle">
+        <h1 class="number">{{ this_month_sales }}</h1>
+      </div>
+    </div>
+
+    <div class="stats-box animate-hoverScale">
+      <h1 class="headline">This Year's Sales</h1>
+      <div class="circle">
+        <h1 class="number">{{ this_year_sales }}</h1>
+      </div>
+    </div>
+
+    <div class="stats-box animate-hoverScale">
+      <h1 class="headline">Last 5 Years' Sales</h1>
+      <div class="circle">
+        <h1 class="number">{{ this_five_years_sales }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <app-price-drop-recommendations
+    *ngIf="username"
+    [admin_name]="username"
+  ></app-price-drop-recommendations>
+
+  <app-popular-tags></app-popular-tags>
+
+  <div class="chart-container animate-fadeInUp">
+    <x-chartist [configuration]="configuration" [events]="events"></x-chartist>
+  </div>
+</div>

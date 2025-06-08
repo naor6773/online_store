@@ -1,0 +1,48 @@
+<div class="item-unit animate-fadeInUp" [ngClass]="{ shake: isEditMode }">
+  <!-- edit and delete buttons -->
+  <div *ngIf="isEditMode" class="edit-buttons">
+    <button class="delete-button" (click)="onDelete($event)">
+      <i class="fas fa-times"></i>
+    </button>
+    <button
+      class="edit-button"
+      (click)="onEdit($event)"
+      [routerLink]="['/add-item']"
+      [queryParams]="{ source: 'edit-item' }"
+      [state]="{ item: item }"
+    >
+      <i class="fas fa-pen"></i>
+    </button>
+  </div>
+
+  <!-- display "BOGO" badge if there is a BOGO discount -->
+  <div
+    class="bogo-badge"
+    *ngIf="isDiscountActive() && item.discount?.type === 'BOGO'"
+  >
+    BOGO
+  </div>
+
+  <!-- item details -->
+  <img
+    [src]="'http://localhost:3000/items/image/' + item.imageFileId"
+    alt="{{ item.item_name }}"
+  />
+
+  <h1>{{ item.item_name }}</h1>
+
+  <ng-container
+    *ngIf="
+      isDiscountActive() && item.discount?.type === 'discount';
+      else noDiscount
+    "
+  >
+    <p class="price discounted-price animate-fadeInDelayed">
+      <span class="old-price">{{ item.price }}$</span>
+      <span class="new-price">{{ item.discount?.newPrice }}$</span>
+    </p>
+  </ng-container>
+  <ng-template #noDiscount>
+    <p class="price animate-fadeInDelayed">{{ item.price }}$</p>
+  </ng-template>
+</div>

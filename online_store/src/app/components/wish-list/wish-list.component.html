@@ -1,0 +1,53 @@
+<!-- titles -->
+<div class="wish-list-container animate-fadeInUp">
+  <h1 class="wish-list-title">Your Wish List</h1>
+
+  <!-- toggle view button -->
+  <div class="toggle-discounts animate-fadeInUp">
+    <button (click)="toggleDiscountView()">
+      {{ showDiscountsOnly ? 'Show All Items' : 'Show Discounts Only' }}
+    </button>
+  </div>
+
+  <!-- mesage for no items -->
+  <div class="no-items-container animate-fadeInUp" *ngIf="no_items">
+    <h1 class="no-items">{{ no_items }}</h1>
+  </div>
+
+  <!-- items -->
+  <div class="wish-list-items-grid" *ngIf="!no_items">
+    <app-wish-list-unit
+      class="wish-list-item"
+      *ngFor="let item of items"
+      [item]="item"
+      (itemRemoved)="get_wish_list_items()"
+      (itemAddedToCart)="get_wish_list_items()"
+    >
+    </app-wish-list-unit>
+  </div>
+
+  <!-- price -->
+  <div class="final-price-container animate-fadeInUp" *ngIf="!no_items">
+    <h1 class="final-price-heading">Final Price</h1>
+    <p class="final-price-value">${{ totalSum }}</p>
+  </div>
+
+  <!-- buttons -->
+  <div class="wishlist-buttons" *ngIf="!no_items">
+    <button class="remove animate-hoverScale" (click)="removeFromWishList()">
+      Remove All
+    </button>
+    <button class="add-all animate-hoverScale" (click)="addAllItemsToCart()">
+      Add Everything to Cart
+    </button>
+  </div>
+
+  <!-- successfull popup -->
+  <div
+    *ngIf="showPopup"
+    @popupAnimation
+    class="popup wishlist-popup animate-scaleIn"
+  >
+    <p>wishlist updated successfully!</p>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="me-page-container animate-fadeInUp">
+  <!-- titels -->
+
+  <h1 class="user-name animate-hoverScale">
+    {{ user_name }}
+  </h1>
+
+  <h1 *ngIf="!is_admin" class="recent-purchases animate-fadeInUp">
+    5 Most Recent Purchases
+  </h1>
+  <h1 *ngIf="is_admin" class="recent-purchases animate-fadeInUp">
+    Stats on Your Products
+  </h1>
+
+  <!-- graths and data -->
+  <div class="grid-container animate-fadeInUp" *ngIf="!is_admin">
+    <app-me-recent-buy
+      class="item"
+      *ngFor="let item of recent_items"
+      [item]="item"
+    >
+    </app-me-recent-buy>
+  </div>
+
+  <div class="stats-continor animate-fadeInUp" *ngIf="is_admin">
+    <app-me-stats-buy></app-me-stats-buy>
+  </div>
+
+  <!-- buttons -->
+  <button (click)="logout()" class="log-out animate-hoverScale">Log Out</button>
+</div>

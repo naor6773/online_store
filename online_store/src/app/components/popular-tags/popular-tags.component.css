@@ -1,0 +1,45 @@
+.popular-tags-container {
+  margin: 20px 0;
+}
+
+.popular-tags-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.popular-tags-container li {
+  background-color: #e7f3fe;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.chart-container {
+  margin-top: 30px;
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+
+.category-header {
+  background-color: #f0f0f0;
+  padding: 8px;
+  cursor: pointer;
+  margin-top: 4px;
+  border-radius: 4px;
+}
+
+.category-header:hover {
+  background-color: #ddd;
+}
+
+.category-details {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.chart-container {
+  width: 500px;
+  height: 300px;
+  margin-top: 10px;
+}

@@ -1,0 +1,141 @@
+.wish-list-unit {
+  position: relative;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: transform var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
+  padding: 1.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.wish-list-unit:hover {
+  transform: scale(var(--hover-scale));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.wish-list-unit:active {
+  transform: scale(0.95);
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  color: red;
+  border: none;
+  outline: none;
+  transition: transform var(--transition-speed) ease,
+    color var(--transition-speed) ease;
+}
+
+.close-icon:hover {
+  transform: scale(1.2);
+  color: orangered;
+}
+
+.close-icon:active {
+  transform: scale(0.9);
+}
+
+.wish-list-unit img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: transform var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
+}
+
+.wish-list-unit img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.wish-list-item-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.wish-list-item-price {
+  font-size: 1.2rem;
+  color: #555;
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.add-to-cart {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  background: var(--success, #4caf50);
+  color: var(--white, #fff);
+}
+
+.add-to-cart:hover {
+  background: limegreen;
+  transform: scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.add-to-cart:active {
+  transform: scale(0.95);
+}
+
+.price {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  transition: transform var(--transition-speed) ease;
+  color: var(--text-dark);
+}
+.price:hover {
+  transform: scale(1.03);
+}
+
+.discounted-price {
+  position: relative;
+  font-size: 2rem;
+}
+.discounted-price .old-price {
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 15px;
+}
+.discounted-price .new-price {
+  color: #e60000;
+  font-weight: bold;
+}
+.discounted-price .discount-time-left {
+  display: block;
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.bogo-badge {
+  background-color: #ffd700;
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
