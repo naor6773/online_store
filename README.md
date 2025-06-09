@@ -12,12 +12,9 @@ This repository contains an Angular front‑end and an Express/Node.js back‑en
 
 ```
 / (root)
-├── server/            # Express API server
-│   ├── .env.example   # Example environment variables
-│   ├── server.js      # Main server file
-│   └── …              # Models, helpers, routes
-└── client/            # Angular application
-    ├── src/
+├── server.js
+└── src/            # Angular application
+    ├── app/
     └── …
 ```
 
